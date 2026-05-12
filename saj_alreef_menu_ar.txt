@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صاج الريف — القائمة</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/apple-touch-icon.png">
+
+<!-- Apple Touch Icon — iOS home screen (place apple-touch-icon.png in repo root) -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<!-- PWA / Mobile Web App -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="صاج الريف">
+<meta name="theme-color" content="#0a0a0a">
+
+<!-- SEO -->
+<meta name="description" content="قائمة طعام مطعم صاج الريف — فرع الكرادة، بغداد">
+<meta name="application-name" content="صاج الريف">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #DCA95C;
+    --gold-light: #e8c07a;
+    --gold-dark: #b8872a;
+    --white: #FFFFFF;
+    --terra: #BF7A54;
+    --bg: #0a0a0a;
+    --card-bg: #111111;
+    --border: rgba(220,169,92,0.25);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--white); font-family:'Tajawal',sans-serif; min-height:100vh; }
+
+  .hero {
+    background:linear-gradient(160deg,#0a0a0a 0%,#1a1308 50%,#0a0a0a 100%);
+    padding:60px 40px 50px; text-align:center; position:relative; overflow:hidden;
+    border-bottom:1px solid var(--border);
+  }
+  .hero::before {
+    content:''; position:absolute; top:-100px; left:50%; transform:translateX(-50%);
+    width:600px; height:600px;
+    background:radial-gradient(circle,rgba(220,169,92,0.08) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .hero-pattern {
+    position:absolute; inset:0;
+    background-image:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(220,169,92,0.03) 30px,rgba(220,169,92,0.03) 31px);
+    pointer-events:none;
+  }
+  .logo-wrap {
+    width:150px; height:150px; margin:0 auto 22px;
+    border:2px solid var(--gold); border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    position:relative; z-index:1;
+    box-shadow:0 0 40px rgba(220,169,92,0.3); overflow:hidden;
+  }
+  .logo-wrap img { width:100%; height:100%; object-fit:cover; }
+
+  .brand-name {
+    font-family:'Tajawal',sans-serif; font-size:2.8rem; font-weight:700;
+    letter-spacing:0.05em; color:var(--gold); position:relative; z-index:1;
+    text-shadow:0 0 60px rgba(220,169,92,0.4);
+  }
+  .brand-name-en {
+    font-family:'Playfair Display',serif; font-size:1rem;
+    color:rgba(220,169,92,0.5); letter-spacing:0.2em; display:block;
+    margin-top:4px; position:relative; z-index:1;
+  }
+  .brand-divider {
+    width:120px; height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    margin:18px auto; position:relative; z-index:1;
+  }
+  .brand-tag { font-size:0.85rem; color:rgba(255,255,255,0.4); position:relative; z-index:1; }
+
+  .nav-wrapper {
+    position:sticky; top:0; z-index:100;
+    background:rgba(10,10,10,0.97); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border); overflow-x:auto;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .nav-wrapper::-webkit-scrollbar{display:none}
+  .nav-tabs {
+    display:flex; gap:0; flex-direction:row;
+    padding:0 20px; min-width:max-content;
+  }
+  .nav-tab {
+    padding:14px 18px; font-size:0.8rem; font-weight:600;
+    color:rgba(255,255,255,0.4); cursor:pointer;
+    border-bottom:2px solid transparent; transition:all 0.25s ease;
+    white-space:nowrap; background:none; border-top:none; border-left:none; border-right:none;
+    font-family:'Tajawal',sans-serif;
+  }
+  .nav-tab:hover{color:var(--gold-light)}
+  .nav-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+  .main{max-width:1100px;margin:0 auto;padding:50px 20px 80px}
+
+  .section{display:none;animation:fadeUp 0.4s ease}
+  .section.active{display:block}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  .section-header{display:flex;align-items:center;gap:20px;flex-direction:row-reverse;margin-bottom:36px}
+  .section-icon{
+    width:44px;height:44px;
+    background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1rem;flex-shrink:0;color:#000;font-weight:700;font-family:'Playfair Display',serif;
+  }
+  .section-title{font-family:'Tajawal',sans-serif;font-size:1.8rem;color:var(--gold);font-weight:700}
+  .section-line{flex:1;height:1px;background:linear-gradient(270deg,var(--gold-dark),transparent)}
+
+  .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+  .item-card{
+    background:var(--card-bg);border:1px solid var(--border);border-radius:10px;
+    padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;
+    flex-direction:row-reverse;gap:14px;transition:border-color 0.2s,transform 0.2s;
+    position:relative;overflow:hidden;
+  }
+  .item-card::before{
+    content:'';position:absolute;top:0;right:0;width:3px;height:100%;
+    background:linear-gradient(180deg,var(--gold),var(--terra));opacity:0;transition:opacity 0.2s;
+  }
+  .item-card:hover{border-color:rgba(220,169,92,0.5);transform:translateY(-2px)}
+  .item-card:hover::before{opacity:1}
+
+
+  .item-img {
+    width: 80px; height: 70px; flex-shrink: 0;
+    border-radius: 6px; overflow: hidden;
+    background: #1e1e1e; border: 1px dashed rgba(220,169,92,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .item-img img { width:100%; height:100%; object-fit:cover; border-radius:6px; }
+  .item-img .ph {
+    font-size:0.6rem; color:rgba(220,169,92,0.35);
+    font-family:'Tajawal',sans-serif; text-align:center; line-height:1.4; padding:4px;
+  }
+  .item-img {
+    width:80px; height:70px; flex-shrink:0;
+    border-radius:6px; overflow:hidden;
+    background:#1a1a1a; border:1px dashed rgba(220,169,92,0.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .item-img img { width:100%; height:100%; object-fit:cover; border-radius:6px; display:block; }
+  .item-img .ph {
+    font-size:0.58rem; color:rgba(220,169,92,0.3);
+    font-family:'Tajawal',sans-serif; text-align:center; line-height:1.5; padding:6px; user-select:none;
+  }
+  .item-info{flex:1;text-align:right}
+  .item-name{font-size:0.9rem;font-weight:600;color:var(--white);margin-bottom:4px;line-height:1.5}
+  .item-name-en{font-size:0.7rem;color:rgba(255,255,255,0.25);font-family:'Playfair Display',serif}
+  .item-price{font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--gold);font-weight:600;white-space:nowrap;text-align:left}
+  .item-price.range{font-size:0.78rem}
+
+  .footer{
+    text-align:center;padding:40px 20px;border-top:1px solid var(--border);
+    color:rgba(255,255,255,0.2);font-size:0.8rem;
+  }
+  .footer span{color:var(--gold);opacity:0.6}
+
+  @media(max-width:600px){
+    .brand-name{font-size:2rem}
+    .items-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-pattern"></div>
+  <div class="logo-wrap">
+    <img src="data:image/png;base64,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" alt="صاج الريف">
+  </div>
+  <h1 class="brand-name">
+    صاج الريف
+    <span class="brand-name-en">SAJ AL REEF</span>
+  </h1>
+  <div class="brand-divider"></div>
+  <p class="brand-tag">فرع الكرادة — بغداد</p>
+</header>
+
+<nav class="nav-wrapper"><div class="nav-tabs" id="navTabs"></div></nav>
+<main class="main" id="mainContent"></main>
+<footer class="footer"><span>صاج الريف</span> — الكرادة، بغداد &nbsp;|&nbsp; جميع الأسعار بالدينار العراقي</footer>
+
+<script>
+const menuData = [
+  {id:'soups',label:'الشوربات',icon:'01',items:[
+    {a:'شوربة العدس',e:'Lentil Soup',p:'3,500'},
+    {a:'شوربة الفطر',e:'Mushroom Soup',p:'3,500'},
+    {a:'شوربة البصل',e:'Onion Soup',p:'3,500'},
+    {a:'شوربة الدجاج',e:'Chicken Soup',p:'3,500'},
+    {a:'شوربة الخضروات',e:'Vegetable Soup',p:'3,500'},
+  ]},
+  {id:'salads',label:'السلطات',icon:'02',items:[
+    {a:'سلطة بامبينو',e:'Bambino Salad',p:'6,500'},
+    {a:'سلطة بيكاسو',e:'Picasso Salad',p:'7,000'},
+    {a:'سلطة سيزر بالدجاج',e:'Chicken Caesar Salad',p:'7,000'},
+    {a:'سلطة فتوش',e:'Fattoush Salad',p:'6,000'},
+    {a:'سلطة يونانية',e:'Greek Salad',p:'6,000'},
+    {a:'سلطة تبولة',e:'Tabbouleh Salad',p:'6,000'},
+    {a:'سلطة الجرجير',e:'Rocca Salad',p:'6,000'},
+    {a:'سلطة روسية',e:'Russian Salad',p:'3,000'},
+  ]},
+  {id:'hotapp',label:'مقبلات ساخنة',icon:'03',items:[
+    {a:'بطاطا مقلية بالجبن',e:'French Fries with Cheese',p:'5,000'},
+    {a:'أجنحة بافالو',e:'Buffalo Wings',p:'7,000'},
+    {a:'أجنحة دجاج باني',e:'Chicken Wings Pane',p:'7,000'},
+    {a:'سمبوسك بالجبن',e:'Cheese Sambusak',p:'6,000'},
+    {a:'كبة طرابلسية',e:'Tripoli Kibbeh',p:'8,000'},
+    {a:'كبة حلبية',e:'Halab Kibbeh',p:'8,000'},
+    {a:'بطاطا مقلية',e:'French Fries',p:'4,000'},
+    {a:'بطاطا ويدجز',e:'Potato Wedges',p:'4,000'},
+    {a:'كروكيت',e:'Crockett',p:'7,000'},
+    {a:'طبق صاج الريف المشكّل',e:'Saj Al Reef Platter',p:'15,000'},
+    {a:'فطيرة بومب',e:'Bomb Pie',p:'12,000'},
+  ]},
+  {id:'coldapp',label:'مقبلات باردة',icon:'04',items:[
+    {a:'حمص أورمة',e:'Hummus Awerma',p:'5,000'},
+    {a:'ورق عنب بزيت الزيتون',e:'Grape Leaves With Olive Oil',p:'4,000'},
+    {a:'حمص',e:'Hummus',p:'3,500'},
+    {a:'حمص بالشاورما',e:'Hummus with Beef Shawerma',p:'5,000'},
+    {a:'سلطة الباذنجان',e:'Eggplant Salad',p:'3,000'},
+    {a:'سلطة الملفوف',e:'Cabbage Salad',p:'3,000'},
+    {a:'جاجيك',e:'Jajeek',p:'3,000'},
+    {a:'متبل',e:'Motabbal',p:'3,000'},
+    {a:'فول',e:'Foul',p:'3,000'},
+    {a:'بابا غنوج',e:'Baba Ghannoog',p:'3,000'},
+    {a:'مقبلات باردة مشكّلة (وسط)',e:'Mixed Cold Appetizers (Medium)',p:'8,000'},
+    {a:'مقبلات باردة مشكّلة (عائلي)',e:'Mixed Cold Appetizers (Family)',p:'11,000'},
+  ]},
+  {id:'manakish',label:'المناقيش',icon:'05',items:[
+    {a:'مناقيش زعتر',e:'Zaatar Manakish',p:'4,000'},
+    {a:'مناقيش جبن',e:'Cheese Manakish',p:'4,500'},
+    {a:'مناقيش زعتر وجبن',e:'Zaatar & Cheese Manakish',p:'4,500'},
+    {a:'مناقيش هوت دوج',e:'Hotdog Manakish',p:'6,500'},
+    {a:'مناقيش لحم',e:'Beef Manakish',p:'7,000'},
+    {a:'مناقيش دجاج بولو',e:'Polo Chicken Manakish',p:'6,500'},
+    {a:'مناقيش لحم متبّل',e:'Marinated Beef Manakish',p:'8,000'},
+    {a:'مناقيش بيبروني',e:'Pepperoni Manakish',p:'10,000'},
+    {a:'مناقيش دجاج متبّل',e:'Marinated Chicken Manakish',p:'9,000'},
+  ]},
+  {id:'fastfood',label:'الفاست فود',icon:'06',items:[
+    {a:'برغر لحم كلاسيك',e:'Classic Beef Burger',p:'6,500'},
+    {a:'برغر دجاج كلاسيك',e:'Classic Chicken Burger',p:'5,500'},
+    {a:'برغر لحم بالجبن',e:'Classic Beef Burger with Cheese',p:'6,500'},
+    {a:'برغر دجاج بالجبن',e:'Classic Chicken Burger with Cheese',p:'6,000'},
+    {a:'برغر لحم سويسري',e:'Swiss Beef Burger',p:'6,500'},
+    {a:'برغر دجاج سكالوبيني',e:'Chicken Scaloppini Burger',p:'6,000'},
+    {a:'ساندويش زنجر',e:'Zinger Sandwich',p:'6,500'},
+    {a:'ساندويش ستيك لحم',e:'Beef Steak Sandwich',p:'7,000'},
+    {a:'ساندويش ستيك دجاج',e:'Chicken Steak Sandwich',p:'6,000'},
+    {a:'شاورما دجاج خبز لبناني',e:'Chicken Shawarma — Lebanese Bread',p:'6,000'},
+    {a:'شاورما لحم خبز لبناني',e:'Beef Shawarma — Lebanese Bread',p:'6,500'},
+    {a:'شاورما لحم خبز فرنسي',e:'Beef Shawarma — French Bread',p:'6,500'},
+    {a:'شاورما دجاج خبز فرنسي',e:'Chicken Shawarma — French Bread',p:'6,000'},
+    {a:'ميني برغر',e:'Mini Burger',p:'10,000'},
+    {a:'ريزو مع مشروب غازي',e:'Rizo with Soft Drink',p:'8,000'},
+    {a:'أصابع دجاج مقرمشة (3)',e:'Crispy Chicken Strips (3)',p:'7,000'},
+    {a:'أصابع دجاج مقرمشة (5)',e:'Crispy Chicken Strips (5)',p:'10,000'},
+    {a:'كومبو برستد دجاج 1 (3 قطع)',e:'Chicken Broasted Combo 1',p:'9,000'},
+    {a:'كومبو برستد دجاج 2 (5 قطع)',e:'Chicken Broasted Combo 2',p:'13,000'},
+    {a:'كومبو برستد دجاج 3 (10 قطع)',e:'Chicken Broasted Combo 3',p:'25,000'},
+  ]},
+  {id:'sigsaj',label:'صاج مميز',icon:'07',items:[
+    {a:'صاج زعتر وفيتا',e:'Saj Thyme and Fitta',p:'4,500'},
+    {a:'صاج باست الدجاج',e:'Saj Chicken Past',p:'9,000'},
+    {a:'صاج مسخّن',e:'Saj Musakhan',p:'7,500'},
+    {a:'صاج برغر أنديون',e:'Saj Burger Andion',p:'9,000'},
+    {a:'صاج دجاج فرانسيسكو',e:'Saj Chicken Fransico',p:'7,000'},
+    {a:'صاج لحم فرانسيسكو',e:'Saj Meat Fransico',p:'8,000'},
+  ]},
+  {id:'saj',label:'الصاج',icon:'08',items:[
+    {a:'صاج باني (لحم / دجاج / مشكّل)',e:'Saj Panne',p:'10,000'},
+    {a:'صاج دجاج متبّل',e:'Marinated Chicken Saj',p:'6,500 – 8,500',r:true},
+    {a:'صاج لحم متبّل',e:'Marinated Beef Saj',p:'7,000 – 9,000',r:true},
+    {a:'صاج لحم سويسري',e:'Swiss Beef Saj',p:'7,000 – 9,000',r:true},
+    {a:'صاج دجاج سويسري',e:'Swiss Chicken Saj',p:'6,000 – 8,000',r:true},
+    {a:'صاج سكالوبيني دجاج',e:'Chicken Scaloppine Saj',p:'6,000 – 7,500',r:true},
+    {a:'صاج سكالوبيني لحم',e:'Beef Scaloppine Saj',p:'7,000 – 9,000',r:true},
+    {a:'صاج جمبري',e:'Shrimp Saj',p:'7,000 – 9,000',r:true},
+    {a:'صاج برغر',e:'Burger Saj',p:'7,000 – 8,500',r:true},
+    {a:'صاج هوت دوج',e:'Hotdog Saj',p:'5,000 – 6,500',r:true},
+    {a:'صاج لحم صيني',e:'Chinese Beef Saj',p:'6,500 – 8,000',r:true},
+    {a:'صاج مكسيكي',e:'Mexican Saj',p:'6,000 – 7,000',r:true},
+    {a:'صاج زنجر',e:'Zinger Saj',p:'6,000 – 8,500',r:true},
+    {a:'صاج كباب ضاني',e:'Lamb Kebab Saj',p:'6,000 – 8,000',r:true},
+    {a:'صاج كباب دجاج',e:'Chicken Kebab Saj',p:'6,000 – 7,000',r:true},
+    {a:'صاج الريف الخاص باللحم',e:'Special Saj AlReef Beef',p:'7,000 – 9,000',r:true},
+    {a:'صاج الريف الخاص بالدجاج',e:'Special Saj AlReef Chicken',p:'6,000 – 8,000',r:true},
+    {a:'صاج زعتر وجبن',e:'Zaatar & Cheese Saj',p:'3,500 – 5,500',r:true},
+    {a:'صاج أومليت',e:'Omelette Saj',p:'3,000 – 5,000',r:true},
+    {a:'صاج أومليت لحم متبّل',e:'Marinated Beef Omelette Saj',p:'6,000 – 8,000',r:true},
+    {a:'صاج أومليت دجاج متبّل',e:'Marinated Chicken Omelette Saj',p:'5,500 – 7,500',r:true},
+    {a:'صاج أومليت هوت دوج',e:'Hotdog Omelette Saj',p:'5,000 – 7,000',r:true},
+    {a:'صاج أومليت جبن',e:'Cheese Omelette Saj',p:'4,000 – 6,000',r:true},
+    {a:'طبق صاج مشكّل (يكفي 4 أشخاص)',e:'Saj Mix Platter (4 Persons)',p:'25,000'},
+  ]},
+  {id:'pizza',label:'البيتزا',icon:'09',items:[
+    {a:'بيتزا صاج الريف',e:'Saj AlReef Pizza',p:'16,000 – 25,000',r:true},
+    {a:'بيتزا دجاج متبّل',e:'Marinated Chicken Pizza',p:'13,000 – 22,000',r:true},
+    {a:'بيتزا لحم متبّل',e:'Marinated Beef Pizza',p:'16,000 – 25,000',r:true},
+    {a:'بيتزا أربعة فصول',e:'Four Season Pizza',p:'13,000 – 22,000',r:true},
+    {a:'بيتزا لحم',e:'Beef Pizza',p:'12,000 – 22,000',r:true},
+    {a:'بيتزا بيبروني',e:'Pepperoni Pizza',p:'13,000 – 21,000',r:true},
+    {a:'بيتزا كباب ضاني',e:'Lamb Kebab Pizza',p:'15,000 – 24,000',r:true},
+    {a:'بيتزا لحم/دجاج مدخّن',e:'Smoked Beef or Chicken Pizza',p:'15,000 – 24,000',r:true},
+    {a:'بيتزا سجق',e:'Sausage Pizza',p:'11,000 – 19,000',r:true},
+    {a:'بيتزا مرغريتا',e:'Margarita Pizza',p:'9,000 – 16,000',r:true},
+    {a:'بيتزا دجاج بولو',e:'Chicken Polo Pizza',p:'11,000 – 19,000',r:true},
+  ]},
+  {id:'eastern',label:'المطبخ الشرقي',icon:'10',items:[
+    {a:'قوزي حمل',e:'Lamb Quzi',p:'23,000'},
+    {a:'قوزي شامي',e:'Sham Quzi',p:'18,000'},
+    {a:'قوزي دجاج',e:'Chicken Quzi',p:'14,000'},
+    {a:'برياني لحم',e:'Beef Biryani',p:'19,000'},
+    {a:'برياني دجاج',e:'Chicken Biryani',p:'18,000'},
+    {a:'برياني جمبري',e:'Shrimp Biryani',p:'20,000'},
+    {a:'كاري لحم',e:'Beef Curry',p:'19,000'},
+    {a:'كاري دجاج',e:'Chicken Curry',p:'16,000'},
+    {a:'دولمة',e:'Dolma',p:'25,000'},
+    {a:'شاورما لحم 1 كيلو',e:'1 KG Beef Shawarma',p:'47,000'},
+    {a:'شاورما لحم نصف كيلو',e:'½ KG Beef Shawarma',p:'27,000'},
+    {a:'شاورما دجاج 1 كيلو',e:'1 KG Chicken Shawarma',p:'37,000'},
+    {a:'شاورما دجاج نصف كيلو',e:'½ KG Chicken Shawarma',p:'21,000'},
+    {a:'طبق شاورما لحم',e:'Beef Shawarma Dish',p:'21,000'},
+    {a:'طبق شاورما دجاج',e:'Chicken Shawarma Dish',p:'16,000'},
+    {a:'شاورما مع أرز',e:'Shawarma with Rice',p:'21,000'},
+  ]},
+  {id:'european',label:'المطبخ الأوروبي',icon:'11',items:[
+    {a:'فيتوتشيني ألفريدو',e:'Fettuccini Alfredo',p:'14,000'},
+    {a:'لازانيا لحم',e:'Beef Lasagna',p:'15,000'},
+    {a:'لازانيا دجاج',e:'Chicken Lasagna',p:'14,000'},
+    {a:'سكالوبيني لحم',e:'Beef Scaloppini',p:'18,000'},
+    {a:'سكالوبيني لحم زينغارا',e:'Beef Scaloppini Zingara',p:'19,000'},
+    {a:'سكالوبيني دجاج',e:'Chicken Scaloppini',p:'17,000'},
+    {a:'كوردون بلو لحم',e:'Beef Cordon Bleu',p:'20,000'},
+    {a:'كوردون بلو دجاج',e:'Chicken Cordon Bleu',p:'18,000'},
+    {a:'بيكاتا لحم',e:'Beef Piccata',p:'21,000'},
+    {a:'بيكاتا دجاج',e:'Chicken Piccata',p:'18,000'},
+    {a:'بيكاتا إيطالي',e:'Piccata Italiano',p:'18,000'},
+    {a:'ستيك لحم',e:'Beef Steak',p:'23,000'},
+    {a:'ستيك دجاج',e:'Chicken Steak',p:'18,000'},
+    {a:'ماستر بيف',e:'Master Beef',p:'19,000'},
+    {a:'ستروم بولي',e:'Stromboli',p:'16,000'},
+    {a:'جمبري باني',e:'Shrimp Panne',p:'20,000'},
+    {a:'لحم بريمو',e:'Beef Brimo',p:'16,000'},
+    {a:'دجاج بريمو',e:'Chicken Brimo',p:'14,000'},
+    {a:'فطيرة لحم',e:'Beef Pie',p:'10,000'},
+    {a:'فطيرة دجاج',e:'Chicken Pie',p:'10,000'},
+    {a:'فطيرة جبن',e:'Cheese Pie',p:'7,000'},
+  ]},
+  {id:'chinese',label:'المطبخ الصيني',icon:'12',items:[
+    {a:'دجاج حلو وحامض',e:'Sweet & Sour Chicken',p:'15,000'},
+    {a:'لحم صيني',e:'Chinese Beef',p:'16,000'},
+    {a:'دجاج صيني',e:'Chinese Chicken',p:'15,000'},
+    {a:'نودلز باللحم',e:'Noodles Beef',p:'16,000'},
+    {a:'نودلز بالدجاج',e:'Noodles Chicken',p:'15,000'},
+    {a:'نودلز بالجمبري',e:'Noodles Shrimp',p:'19,000'},
+  ]},
+  {id:'veg',label:'نباتي',icon:'13',items:[
+    {a:'بيتزا خضروات وسط',e:'Vegetable Pizza Medium',p:'8,000'},
+    {a:'بيتزا خضروات كبير',e:'Vegetable Pizza Large',p:'17,000'},
+    {a:'بيتزا فطر وسط',e:'Mushroom Pizza Medium',p:'8,000'},
+    {a:'بيتزا فطر كبير',e:'Mushroom Pizza Large',p:'17,000'},
+    {a:'نودلز بالخضروات',e:'Vegetable Noodles',p:'8,000'},
+    {a:'لازانيا خضروات',e:'Vegetable Lasagna',p:'8,000'},
+    {a:'طبق سوتيه',e:'Sauteed Dish',p:'7,000'},
+    {a:'أرز بالخضروات',e:'Rice with Vegetables',p:'7,000'},
+    {a:'سباغيتي بالخضروات',e:'Vegetable Spaghetti',p:'7,000'},
+    {a:'صاج خضروات',e:'Vegetables Saj',p:'4,000'},
+  ]},
+  {id:'grills',label:'المشاوي',icon:'14',items:[
+    {a:'دجاج بلا عظم',e:'Boneless Chicken',p:'19,000'},
+    {a:'دجاج بلا عظم مع أرز',e:'Boneless Chicken with Rice',p:'22,000'},
+    {a:'دجاج الريف',e:'AlReef Chicken',p:'20,000'},
+    {a:'دجاج الريف مع أرز',e:'AlReef Chicken with Rice',p:'23,000'},
+    {a:'وجبة دجاج الريف',e:'AlReef Chicken Meal',p:'12,000'},
+    {a:'وجبة دجاج بلا عظم',e:'Boneless Chicken Meal',p:'12,000'},
+    {a:'كباب غنم',e:'Lamb Kebab',p:'25,000'},
+    {a:'كباب دجاج',e:'Chicken Kebab',p:'18,000'},
+    {a:'تكّة غنم',e:'Lamb Tikka',p:'25,000'},
+    {a:'تكّة دجاج (شيش طاووق)',e:'Chicken Tikka',p:'18,000'},
+    {a:'مشاوي مشكّلة',e:'Mixed Grill',p:'25,000'},
+    {a:'أجنحة مشوية',e:'Grilled Wings',p:'11,500'},
+    {a:'ساندويش تكّة دجاج',e:'Chicken Tikka Sandwich',p:'6,000'},
+    {a:'ساندويش كباب دجاج',e:'Chicken Kebab Sandwich',p:'6,000'},
+  ]},
+  {id:'kids',label:'وجبات أطفال',icon:'15',items:[
+    {a:'وجبة نقت دجاج مع هدية',e:'Chicken Nuggets Meal with Gift',p:'5,000'},
+    {a:'وجبة برغر دجاج مع هدية',e:'Chicken Burger Meal with Gift',p:'5,000'},
+    {a:'وجبة برغر لحم مع هدية',e:'Beef Burger Meal with Gift',p:'6,000'},
+  ]},
+  {id:'desserts',label:'الحلويات',icon:'16',items:[
+    {a:'تريفل',e:'Trifle',p:'4,000'},
+    {a:'موس الشوكولاتة',e:'Chocolate Mousse',p:'4,000'},
+    {a:'كازانوفا',e:'Casanova',p:'4,000'},
+    {a:'تراب الملوك',e:'Torab El Melook',p:'4,000'},
+    {a:'كيك (كيندر/لوتس/نوتيلا/تويكس/غالاكسي)',e:'Cake Varieties',p:'4,000'},
+    {a:'كرواسان',e:'Croissant',p:'3,000'},
+  ]},
+  {id:'hotdrinks',label:'مشروبات ساخنة',icon:'17',items:[
+    {a:'كابتشينو',e:'Cappuccino',p:'5,000'},
+    {a:'لاتيه',e:'Latte',p:'5,000'},
+    {a:'موكا',e:'Mocha',p:'5,500'},
+    {a:'وايت كوفي',e:'White Coffee',p:'5,000'},
+    {a:'كراميل ماكياتو',e:'Caramel Macchiato',p:'5,500'},
+    {a:'إسبريسو',e:'Espresso',p:'3,000'},
+    {a:'قهوة تركية',e:'Turkish Coffee',p:'3,000'},
+    {a:'قهوة جيليت',e:'Gicleite Coffee',p:'4,000'},
+    {a:'قهوة باونتي',e:'Bounty Coffee',p:'4,500'},
+    {a:'موكا بعد الثامنة',e:'Café Mocha After Eight',p:'6,000'},
+    {a:'شوكولاتة ساخنة',e:'Hot Chocolate',p:'4,000'},
+    {a:'شوكولاتة بعد الثامنة',e:'Hot Chocolate After Eight',p:'4,500'},
+    {a:'نسكافيه',e:'Nescafe',p:'4,000'},
+    {a:'أمريكانو',e:'Americano',p:'4,000'},
+    {a:'شاي أسود',e:'Black Tea',p:'1,000'},
+    {a:'شاي بالنعناع',e:'Tea with Mint',p:'2,500'},
+    {a:'شاي الزنجبيل',e:'Ginger Tea',p:'2,500'},
+    {a:'شاي أخضر',e:'Green Tea',p:'2,500'},
+  ]},
+  {id:'juices',label:'عصائر طازجة',icon:'18',items:[
+    {a:'عصير صاج الريف',e:'Saj Al Reef Fresh',p:'6,000'},
+    {a:'عصير برتقال',e:'Orange',p:'5,000'},
+    {a:'عصير ليمون',e:'Lemon',p:'5,000'},
+    {a:'عصير فراولة',e:'Strawberry',p:'5,000'},
+    {a:'عصير أناناس',e:'Pineapple',p:'5,000'},
+    {a:'عصير رمان',e:'Pomegranate',p:'5,000'},
+    {a:'عصير ليمون بالنعناع',e:'Lemon and Mint',p:'5,000'},
+    {a:'عصير بطيخ',e:'Watermelon',p:'5,000'},
+    {a:'عصير مانغو',e:'Mango',p:'5,000'},
+    {a:'عصير جزر',e:'Carrot',p:'5,000'},
+    {a:'عصير تفاح',e:'Apple',p:'5,000'},
+  ]},
+  {id:'shakes',label:'ميلك شيك',icon:'19',items:[
+    {a:'ميلك شيك صاج الريف',e:'Saj Al Reef Milkshake',p:'7,000'},
+    {a:'ميلك شيك فراولة',e:'Strawberry Milkshake',p:'6,000'},
+    {a:'ميلك شيك فانيلا',e:'Vanilla Milkshake',p:'6,000'},
+    {a:'ميلك شيك لوتس',e:'Lotus Milkshake',p:'6,500'},
+    {a:'ميلك شيك نوتيلا',e:'Nutella Milkshake',p:'6,500'},
+    {a:'ميلك شيك باونتي',e:'Milkshake Bounty',p:'6,000'},
+    {a:'ميلك شيك كراميل',e:'Caramel Milkshake',p:'6,000'},
+    {a:'ميلك شيك شوكولاتة',e:'Chocolate Milkshake',p:'6,000'},
+    {a:'ميلك شيك أوريو',e:'Oreo Milkshake',p:'6,500'},
+  ]},
+  {id:'cocktails',label:'كوكتيلات',icon:'20',items:[
+    {a:'كوكتيل صاج الريف',e:'Saj Al Reef Cocktail',p:'6,500'},
+    {a:'كوكتيل موز وفراولة',e:'Banana & Strawberry Cocktail',p:'6,000'},
+    {a:'كوكتيل موز وشوكولاتة',e:'Banana & Chocolate Cocktail',p:'6,000'},
+    {a:'كوكتيل توت مشكّل',e:'Mix Berries Cocktail',p:'6,500'},
+    {a:'كوكتيل ألاسكا',e:'Alaska Cocktail',p:'6,000'},
+    {a:'كوكتيل فواكه',e:'Fruit Cocktail',p:'6,000'},
+  ]},
+  {id:'frappe',label:'فرابتشينو',icon:'21',items:[
+    {a:'فرابيه شوكولاتة',e:'Chocolate Frappe',p:'6,500'},
+    {a:'فرابيه كراميل',e:'Caramel Frappe',p:'6,500'},
+    {a:'فرابيه باونتي',e:'Frappe Bounty',p:'6,500'},
+    {a:'فرابيه فانيلا',e:'Vanilla Frappe',p:'6,500'},
+    {a:'فرابيه كيت كات',e:'Kit Kat Frappe',p:'6,500'},
+    {a:'فرابيه مشكّل',e:'Mix Frappe',p:'6,500'},
+    {a:'فرابيه دايت',e:'Diet Frappe',p:'7,000'},
+  ]},
+  {id:'shisha',label:'النرجيلة',icon:'22',items:[
+    {a:'نرجيلة إنجليزية',e:'English Shisha',p:'14,000'},
+    {a:'نرجيلة ليمون',e:'Lemon Shisha',p:'12,000'},
+    {a:'نرجيلة ليمون نعناع',e:'Lemon Mint Shisha',p:'12,000'},
+    {a:'نرجيلة صاج الريف',e:'Saj Alreef Shisha',p:'12,000'},
+    {a:'نرجيلة حمضيات',e:'Citrus Shisha',p:'12,000'},
+    {a:'نرجيلة عنب',e:'Grapes Shisha',p:'12,000'},
+    {a:'نرجيلة فواكه',e:'Fruit Shisha',p:'12,000'},
+    {a:'نرجيلة تفاحتين',e:'Two Apple Shisha',p:'12,000'},
+    {a:'نرجيلة علكة ونعناع',e:'Gum & Mint Shisha',p:'12,000'},
+    {a:'نرجيلة فراولة وأوريو',e:'Strawberry & Oreo Shisha',p:'12,000'},
+    {a:'نرجيلة نعناع',e:'Mint Shisha',p:'12,000'},
+    {a:'نرجيلة باونتي',e:'Bounty Shisha',p:'12,000'},
+    {a:'نرجيلة خيال',e:'Khaial Shisha',p:'12,000'},
+    {a:'نرجيلة شمام',e:'Shmam Shisha',p:'12,000'},
+    {a:'نرجيلة فواكه ثلج',e:'Ice Fruit Shisha',p:'12,000'},
+    {a:'نرجيلة هاواي',e:'Hawai Shisha',p:'12,000'},
+  ]},
+  {id:'freshshisha',label:'نرجيلة طازجة',icon:'23',items:[
+    {a:'نرجيلة أناناس طازجة',e:'Pineapple Fresh Shisha',p:'20,000'},
+    {a:'نرجيلة رمان طازجة',e:'Pomegranate Fresh Shisha',p:'20,000'},
+    {a:'نرجيلة جريبفروت طازجة',e:'Grapefruit Fresh Shisha',p:'20,000'},
+    {a:'نرجيلة شمام طازجة',e:'Melon Fresh Shisha',p:'20,000'},
+    {a:'نرجيلة تفاح طازجة',e:'Apple Fresh Shisha',p:'20,000'},
+  ]},
+];
+
+const navEl = document.getElementById('navTabs');
+const mainEl = document.getElementById('mainContent');
+
+menuData.forEach((cat, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'nav-tab' + (i===0?' active':'');
+  btn.textContent = cat.label;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(cat.id).classList.add('active');
+    btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  });
+  navEl.appendChild(btn);
+
+  const sec = document.createElement('section');
+  sec.className = 'section'+(i===0?' active':'');
+  sec.id = cat.id;
+  sec.innerHTML = `
+    <div class="section-header">
+      <div class="section-icon">${cat.icon}</div>
+      <h2 class="section-title">${cat.label}</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="items-grid">
+      ${cat.items.map(it=>`
+        <div class="item-card">
+          <div class="item-img">
+            ${it.img ? `<img src="${it.img}" alt="${it.a}">` : '<div class=\"ph\">+ صورة</div>'}
+          </div>
+          <div class="item-info">
+            <div class="item-name">${it.a}</div>
+            <div class="item-name-en">${it.e}</div>
+          </div>
+          <div class="item-price ${it.r?'range':''}">${it.p} د.ع</div>
+        </div>`).join('')}
+    </div>`;
+  mainEl.appendChild(sec);
+});
+</script>
+</body>
+</html>

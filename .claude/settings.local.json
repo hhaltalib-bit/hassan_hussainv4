@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(New-Item -ItemType Directory -Force -Path \"C:\\\\Users\\\\hhalt\\\\OneDrive\\\\Desktop\\\\saj-Al-reef-main_حسين\\\\saj-Al-reef-main\\\\frontend\\\\src\\\\data\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"done\")"
+    ]
+  }
+}
